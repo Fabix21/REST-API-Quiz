@@ -31,7 +31,7 @@ public class QuizController {
     @PostMapping(path = "api/quizzes")
     public Quiz AddQuestion( @RequestBody Quiz quiz ) {
 
-        Quiz addQuestionToRepository = new Quiz.Builder()
+        Quiz addQuestionToRepository = Quiz.builder()
                 .title(quiz.getTitle())
                 .text(quiz.getText())
                 .options(quiz.getOptions())
@@ -53,7 +53,8 @@ public class QuizController {
         Quiz question = quizzes.stream().filter(quiz -> id == quiz.getId()).findFirst().orElseThrow();
 
         if (Integer.valueOf(answer).equals(question.getAnswer())) {
-            System.out.println(question.getAnswer());
+
+            LOGGER.log(Level.FINE,String.valueOf(question.getAnswer()));
             return new Feedback(true);
         } else return new Feedback(false);
     }

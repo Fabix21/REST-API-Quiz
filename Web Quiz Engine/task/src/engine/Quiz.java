@@ -1,13 +1,16 @@
 package engine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Arrays;
 
-@Data
+@Setter
+@Getter
+@Builder
 public class Quiz {
-
     private String title;
     private String text;
     private String[] options;
@@ -24,49 +27,5 @@ public class Quiz {
                 ", answer=" + answer +
                 ", id=" + id +
                 '}';
-    }
-
-    public static final class Builder {
-
-        private String title;
-        private String text;
-        private String[] options;
-        private int answer;
-        private long id;
-
-        public Builder title( String title ) {
-            this.title = title;
-            return this;
-        }
-
-        public Builder text( String text ) {
-            this.text = text;
-            return this;
-        }
-
-        public Builder options( String[] options ) {
-            this.options = options;
-            return this;
-        }
-
-        public Builder answer( int answer ) {
-            this.answer = answer;
-            return this;
-        }
-
-        public Builder id( long id ) {
-            this.id = id;
-            return this;
-        }
-
-        public Quiz build() {
-            Quiz quiz = new Quiz();
-            quiz.title = this.title;
-            quiz.text = this.text;
-            quiz.options = this.options;
-            quiz.answer = this.answer;
-            quiz.id = this.id;
-            return quiz;
-        }
     }
 }
