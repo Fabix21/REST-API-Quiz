@@ -5,13 +5,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @RestController
 public class QuizController {
     private final AtomicLong counter = new AtomicLong();
     private List<Quiz> quizzes = new ArrayList<>();
-
+    private final static Logger LOGGER = Logger.getLogger(QuizController.class.getName());
     @GetMapping(path = "api/quizzes/{id}")
     public Quiz GetQuestionById( @PathVariable int id ) {
         if (quizzes.size() < id) {
@@ -38,8 +40,9 @@ public class QuizController {
                 .build();
 
         quizzes.add(addQuestionToRepository);
-        System.out.println(addQuestionToRepository.toString());
+        LOGGER.log(Level.INFO,addQuestionToRepository.toString());
         return addQuestionToRepository;
+
     }
 
     @PostMapping(path = "api/quizzes/{id}/solve")
