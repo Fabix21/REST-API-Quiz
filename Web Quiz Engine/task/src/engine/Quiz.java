@@ -1,9 +1,11 @@
 package engine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import java.util.Arrays;
 
+@Data
 public class Quiz {
 
     private String title;
@@ -12,46 +14,6 @@ public class Quiz {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int answer;
     private long id;
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle( String title ) {
-        this.title = title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText( String text ) {
-        this.text = text;
-    }
-
-    public String[] getOptions() {
-        return options;
-    }
-
-    public void setOptions( String[] options ) {
-        this.options = options;
-    }
-
-    public int getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer( int answer ) {
-        this.answer = answer;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId( long id ) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
