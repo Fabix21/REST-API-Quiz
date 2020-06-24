@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Quiz not found")
 class QuizNotFoundException extends RuntimeException {
 
-    public QuizNotFoundException( String message ) {
+    QuizNotFoundException( String message ) {
         super(message);
     }
 
     public QuizNotFoundException() {
     }
-
 }

@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-
 @RestController
 public class QuizController {
 
@@ -13,9 +11,8 @@ public class QuizController {
 
     @GetMapping(path = "api/quizzes/{id}")
     public Quiz getQuestionById( @PathVariable int id ) {
-        quizRepository.findById(id);
         if (quizRepository.size() < id) {
-            throw new QuizNotFoundException("Invalid id :" + id);
+            throw new QuizNotFoundException("Invalid id" + id);
         }
         return quizRepository.findById(id);
     }

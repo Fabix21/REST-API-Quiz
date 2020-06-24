@@ -1,30 +1,20 @@
 package engine;
 
-public class Feedback {
+import lombok.Getter;
+
+@Getter
+class Feedback {
 
     private boolean success;
-    private String feedback;
+    private String result;
 
-    public Feedback( boolean success ) {
+    Feedback( boolean success ) {
         this.success = success;
         setFeedback();
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess( boolean success ) {
-        this.success = success;
-    }
-
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback() {
-        feedback = success ? "Congratulations, you're right!"
+    private void setFeedback() {
+        result = success ? "Congratulations, you're right!"
                 : "Wrong answer! Please, try again.";
-
     }
 }
