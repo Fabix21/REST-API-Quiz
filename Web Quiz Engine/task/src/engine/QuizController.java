@@ -2,61 +2,41 @@ package engine;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 @RestController
 public class QuizController {
-    private final AtomicLong counter = new AtomicLong();
-    private List<Quiz> quizzes = new ArrayList<>();
-    private final static Logger LOGGER = Logger.getLogger(QuizController.class.getName());
+
+    private QuizRepository quizRepository = new QuizRepository();
+
     @GetMapping(path = "api/quizzes/{id}")
-    public Quiz GetQuestionById( @PathVariable int id ) {
-        if (quizzes.size() < id) {
+    public Quiz getQuestionById( @PathVariable int id ) {
+        quizRepository.findById(id);
+        if (quizRepository.size() < id) {
             throw new QuizNotFoundException("Invalid id :" + id);
         }
-        return quizzes.stream().filter(quiz -> id == quiz.getId()).findFirst().orElseThrow();
-
+        return quizRepository.findById(id);
     }
 
     @GetMapping(path = "api/quizzes")
-    public List<Quiz> GetAllQuestions() {
-        return quizzes;
+    public List<Quiz> getAllQuestions() {
+        return quizRepository.getQuizzes();
     }
 
     @PostMapping(path = "api/quizzes")
-    public Quiz AddQuestion( @RequestBody Quiz quiz ) {
-
-        Quiz addQuestionToRepository = Quiz.builder()
-                .title(quiz.getTitle())
-                .text(quiz.getText())
-                .options(quiz.getOptions())
-                .answer(quiz.getAnswer())
-                .id(counter.incrementAndGet())
-                .build();
-
-        quizzes.add(addQuestionToRepository);
-        LOGGER.log(Level.INFO,addQuestionToRepository.toString());
-        return addQuestionToRepository;
-
+    public Quiz addQuestion( @RequestBody Quiz quiz ) {
+        quizRepository.addQuiz(quiz);
+        return quiz;
     }
 
     @PostMapping(path = "api/quizzes/{id}/solve")
-    public Feedback CheckQuestion( @RequestParam int answer,@PathVariable int id ) {
-        if (quizzes.size() < id) {
+    public Feedback checkQuestion( @RequestParam int answer,@PathVariable int id ) {
+        if (quizRepository.size() < id) {
             throw new QuizNotFoundException("Invalid id" + id);
         }
-        Quiz question = quizzes.stream().filter(quiz -> id == quiz.getId()).findFirst().orElseThrow();
-
-        if (Integer.valueOf(answer).equals(question.getAnswer())) {
-
-            LOGGER.log(Level.FINE,String.valueOf(question.getAnswer()));
-            return new Feedback(true);
-        } else return new Feedback(false);
+        return quizRepository.getFeedback(quizRepository.findById(id),answer);
     }
 }
 
