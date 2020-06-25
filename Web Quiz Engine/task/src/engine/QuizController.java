@@ -22,6 +22,8 @@ public class QuizController {
 
     @PostMapping(path = "api/quizzes")
     public Quiz addQuestion( @RequestBody Quiz quiz ) {
+        if (quiz.getTitle() == null || quiz.getText() == null)
+            throw new QuizNullStringException();
         quizRepository.addQuiz(quiz);
         return quiz;
     }
