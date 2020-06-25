@@ -40,5 +40,10 @@ public class QuizRepository {
         return quizzes.size();
     }
 
+    void checkForIndexException( int id ) {
+        if (id > quizzes.size()) {
+            throw new QuizNotFoundException("Invalid id" + id);
+        }
+    }
 
 }
