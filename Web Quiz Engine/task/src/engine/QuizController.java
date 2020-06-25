@@ -22,10 +22,14 @@ public class QuizController {
 
     @PostMapping(path = "api/quizzes")
     public Quiz addQuestion( @RequestBody Quiz quiz ) {
-        if (quiz.getTitle() == null || quiz.getText() == null)
-            throw new QuizNullStringException();
+        checkForNulls(quiz);
         quizRepository.addQuiz(quiz);
         return quiz;
+    }
+
+    private void checkForNulls( @RequestBody Quiz quiz ) {
+        if (quiz.getTitle() == null || quiz.getText() == null || quiz.getOptions() == null)
+            throw new QuizNullException();
     }
 
     @PostMapping(path = "api/quizzes/{id}/solve")
