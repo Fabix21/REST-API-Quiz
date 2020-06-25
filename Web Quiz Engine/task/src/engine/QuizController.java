@@ -11,7 +11,7 @@ public class QuizController {
 
     @GetMapping(path = "api/quizzes/{id}")
     public Quiz getQuestionById( @PathVariable int id ) {
-        if (quizRepository.size() < id) {
+        if (id > quizRepository.size()) {
             throw new QuizNotFoundException("Invalid id" + id);
         }
         return quizRepository.findById(id);
@@ -30,7 +30,7 @@ public class QuizController {
 
     @PostMapping(path = "api/quizzes/{id}/solve")
     public Feedback checkQuestion( @RequestBody Quiz quiz,@PathVariable int id ) {
-        if (quizRepository.size() < id) {
+        if (id > quizRepository.size()) {
             throw new QuizNotFoundException("Invalid id" + id);
         }
         return quizRepository.getFeedback(quizRepository.findById(id),quiz.getAnswer());

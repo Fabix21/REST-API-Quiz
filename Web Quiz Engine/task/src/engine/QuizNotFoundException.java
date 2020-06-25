@@ -9,7 +9,4 @@ class QuizNotFoundException extends RuntimeException {
     QuizNotFoundException( String message ) {
         super(message);
     }
-
-    public QuizNotFoundException() {
-    }
 }
