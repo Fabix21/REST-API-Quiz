@@ -1,5 +1,6 @@
 package engine;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -7,7 +8,8 @@ import java.util.List;
 @RestController
 public class QuizController {
 
-
+    @Autowired
+    private H2Repository h2Repository;
     private QuizRepository quizRepository = new QuizRepository();
 
     @GetMapping(path = "api/quizzes/{id}")
@@ -18,13 +20,15 @@ public class QuizController {
 
     @GetMapping(path = "api/quizzes")
     public List<Quiz> getAllQuestions() {
-        return quizRepository.getQuizzes();
+        return h2Repository.findAll();
+        //  return quizRepository.getQuizzes();
     }
 
     @PostMapping(path = "api/quizzes")
     public Quiz addQuestion( @RequestBody Quiz quiz ) {
         checkForNulls(quiz);
         quizRepository.addQuiz(quiz);
+        h2Repository.save(quiz);
         return quiz;
     }
 

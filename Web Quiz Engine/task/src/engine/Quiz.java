@@ -1,15 +1,14 @@
 package engine;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 
 @Data
-@Builder
 @Entity
 class Quiz {
     private String title;
@@ -19,6 +18,7 @@ class Quiz {
     private String[] answer;
 
     @Id
+    @GeneratedValue
     private long id;
 
 }

@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-
+@Getter
 @Component
 public class QuizRepository {
 
     private final AtomicLong idGenerator = new AtomicLong();
-    @Getter
+
     private List<Quiz> quizzes = new ArrayList<>();
 
     private long generateId() {
@@ -28,15 +28,13 @@ public class QuizRepository {
     }
 
     Quiz addQuiz( Quiz quiz ) {
-        quiz.setId(generateId());
+        // quiz.setId(generateId());
         quizzes.add(quiz);
         return quiz;
     }
 
     Feedback getFeedback( Quiz quiz,String[] answer ) {
-
         return new Feedback(Arrays.equals(quiz.getAnswer(),answer) || (quiz.getAnswer() == null && answer.length == 0));
-
     }
 
     int size() {
