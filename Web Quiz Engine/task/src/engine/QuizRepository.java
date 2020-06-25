@@ -33,7 +33,9 @@ public class QuizRepository {
     }
 
     Feedback getFeedback( Quiz quiz,String[] answer ) {
-        return new Feedback(Arrays.equals(quiz.getAnswer(),answer));
+
+        return new Feedback(Arrays.equals(quiz.getAnswer(),answer) || (quiz.getAnswer() == null && answer.length == 0));
+
     }
 
     int size() {
