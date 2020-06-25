@@ -29,11 +29,11 @@ public class QuizController {
     }
 
     @PostMapping(path = "api/quizzes/{id}/solve")
-    public Feedback checkQuestion( @RequestParam int answer,@PathVariable int id ) {
+    public Feedback checkQuestion( @RequestBody Quiz quiz,@PathVariable int id ) {
         if (quizRepository.size() < id) {
             throw new QuizNotFoundException("Invalid id" + id);
         }
-        return quizRepository.getFeedback(quizRepository.findById(id),answer);
+        return quizRepository.getFeedback(quizRepository.findById(id),quiz.getAnswer());
     }
 }
 

@@ -6,7 +6,7 @@ import lombok.Getter;
 class Feedback {
 
     private boolean success;
-    private String result;
+    private String feedback;
 
     Feedback( boolean success ) {
         this.success = success;
@@ -14,7 +14,7 @@ class Feedback {
     }
 
     private void setFeedback() {
-        result = success ? "Congratulations, you're right!"
+        feedback = success ? "Congratulations, you're right!"
                 : "Wrong answer! Please, try again.";
     }
 }

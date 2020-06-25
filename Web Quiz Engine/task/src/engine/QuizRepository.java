@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -21,7 +22,8 @@ public class QuizRepository {
     Quiz findById( int id ) {
         return quizzes.stream()
                 .filter(quiz -> id == quiz.getId())
-                .findFirst().orElseThrow();
+                .findFirst()
+                .orElseThrow();
     }
 
     Quiz addQuiz( Quiz quiz ) {
@@ -30,8 +32,8 @@ public class QuizRepository {
         return quiz;
     }
 
-    Feedback getFeedback( Quiz quiz,int answer ) {
-        return new Feedback(quiz.getAnswer() == answer);
+    Feedback getFeedback( Quiz quiz,String[] answer ) {
+        return new Feedback(Arrays.equals(quiz.getAnswer(),answer));
     }
 
     int size() {
