@@ -8,9 +8,14 @@ import java.util.List;
 @RestController
 public class QuizController {
 
+    private final QuizRepository quizRepository = new QuizRepository();
     @Autowired
-    private H2Repository h2Repository;
-    private QuizRepository quizRepository = new QuizRepository();
+    H2Repository h2Repository;
+
+    @Autowired
+    public QuizController( H2Repository h2Repository ) {
+        quizRepository.setQuizzes(h2Repository.findAll());
+    }
 
     @GetMapping(path = "api/quizzes/{id}")
     public Quiz getQuestionById( @PathVariable int id ) {
@@ -20,8 +25,7 @@ public class QuizController {
 
     @GetMapping(path = "api/quizzes")
     public List<Quiz> getAllQuestions() {
-        return h2Repository.findAll();
-        //  return quizRepository.getQuizzes();
+        return quizRepository.getQuizzes();
     }
 
     @PostMapping(path = "api/quizzes")

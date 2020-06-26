@@ -8,17 +8,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+
 @Getter
 @Component
 public class QuizRepository {
 
     private final AtomicLong idGenerator = new AtomicLong();
-
     private List<Quiz> quizzes = new ArrayList<>();
 
-    private long generateId() {
-        return idGenerator.incrementAndGet();
-    }
 
     Quiz findById( int id ) {
         return quizzes.stream()
@@ -27,24 +24,25 @@ public class QuizRepository {
                 .orElseThrow();
     }
 
-    Quiz addQuiz( Quiz quiz ) {
-        // quiz.setId(generateId());
+    void addQuiz( Quiz quiz ) {
         quizzes.add(quiz);
-        return quiz;
     }
 
     Feedback getFeedback( Quiz quiz,String[] answer ) {
         return new Feedback(Arrays.equals(quiz.getAnswer(),answer) || (quiz.getAnswer() == null && answer.length == 0));
     }
 
-    int size() {
-        return quizzes.size();
-    }
 
     void checkForIndexException( int id ) {
         if (id > quizzes.size()) {
             throw new QuizNotFoundException("Invalid id" + id);
         }
     }
+
+    List<Quiz> setQuizzes( List<Quiz> quizzes ) {
+        this.quizzes = quizzes;
+        return quizzes;
+    }
+
 
 }

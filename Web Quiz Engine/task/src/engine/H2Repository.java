@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface H2Repository extends JpaRepository<Quiz, Long> {
+
 }
