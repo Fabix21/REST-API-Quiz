@@ -12,6 +12,9 @@ public class QuizController {
     @Autowired
     H2Repository h2Repository;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     @Autowired
     public QuizController( H2Repository h2Repository ) {
@@ -46,6 +49,12 @@ public class QuizController {
     public Feedback checkQuestion( @RequestBody Quiz quiz,@PathVariable int id ) {
         quizRepository.checkForIndexException(id);
         return quizRepository.getFeedback(quizRepository.findById(id),quiz.getAnswer());
+    }
+
+    @PostMapping(path = "/api/register")
+    public List<User> addUser( @RequestBody User user ) {
+        userRepository.save(user);
+        return userRepository.findAll();
     }
 
 
