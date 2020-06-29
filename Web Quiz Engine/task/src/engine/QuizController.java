@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 public class QuizController {
 
@@ -44,8 +45,14 @@ public class QuizController {
     }
 
     @PostMapping(path = "/api/register")
-    public List<User> addUser( @RequestBody User user ) {
-        userRepository.save(user);
+    public List<User> addUser( @RequestBody User newUser ) {
+        userRepository.findAll()
+                .stream().filter(user -> !user.getEmail()
+                .contains(newUser.getEmail()))
+                .findAny()
+                .orElseThrow(UserEmailTakenException::new);
+
+        userRepository.save(newUser);
         return userRepository.findAll();
     }
 

@@ -16,7 +16,6 @@ public class QuizRepository {
     private final AtomicLong idGenerator = new AtomicLong();
     private List<Quiz> quizzes = new ArrayList<>();
 
-
     Quiz findById( int id ) {
         return quizzes.stream()
                 .filter(quiz -> id == quiz.getId())
