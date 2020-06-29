@@ -25,13 +25,14 @@ public class QuizRepository {
     }
 
     void addQuiz( Quiz quiz ) {
+        if (quiz.getTitle() == null || quiz.getText() == null || quiz.getOptions() == null)
+            throw new QuizNullException();
         quizzes.add(quiz);
     }
 
     Feedback getFeedback( Quiz quiz,String[] answer ) {
         return new Feedback(Arrays.equals(quiz.getAnswer(),answer) || (quiz.getAnswer() == null && answer.length == 0));
     }
-
 
     void checkForIndexException( int id ) {
         if (id > quizzes.size()) {

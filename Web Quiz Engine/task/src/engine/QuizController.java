@@ -34,15 +34,9 @@ public class QuizController {
 
     @PostMapping(path = "api/quizzes")
     public Quiz addQuestion( @RequestBody Quiz quiz ) {
-        checkForNulls(quiz);
         quizRepository.addQuiz(quiz);
         h2Repository.save(quiz);
         return quiz;
-    }
-
-    private void checkForNulls( @RequestBody Quiz quiz ) {
-        if (quiz.getTitle() == null || quiz.getText() == null || quiz.getOptions() == null)
-            throw new QuizNullException();
     }
 
     @PostMapping(path = "api/quizzes/{id}/solve")
