@@ -12,6 +12,7 @@ public class QuizController {
     @Autowired
     H2Repository h2Repository;
 
+
     @Autowired
     public QuizController( H2Repository h2Repository ) {
         quizRepository.setQuizzes(h2Repository.findAll());
@@ -46,6 +47,8 @@ public class QuizController {
         quizRepository.checkForIndexException(id);
         return quizRepository.getFeedback(quizRepository.findById(id),quiz.getAnswer());
     }
+
+
 }
 
 
