@@ -48,9 +48,11 @@ public class QuizController {
     @PostMapping(path = "/api/register")
     public List<User> addUser( @RequestBody User newUser ) {
         userRepository.findAll()
-                .stream().filter(user -> !user.getEmail()
+                .stream()
+                .filter(user -> !user.getEmail()
                 .contains(newUser.getEmail()))
-                .findAny()
+                .filter(user -> isEmailValid(newUser.getEmail()))
+                .filter(user -> newUser.getPassword().length() >= 5).findAny()
                 .orElseThrow(UserEmailTakenException::new);
 
         userRepository.save(newUser);
