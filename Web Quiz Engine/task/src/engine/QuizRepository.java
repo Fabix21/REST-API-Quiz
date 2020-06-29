@@ -21,7 +21,7 @@ public class QuizRepository {
         return quizzes.stream()
                 .filter(quiz -> id == quiz.getId())
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new QuizNotFoundException("Invalid id" + id));
     }
 
     void addQuiz( Quiz quiz ) {
@@ -34,16 +34,15 @@ public class QuizRepository {
         return new Feedback(Arrays.equals(quiz.getAnswer(),answer) || (quiz.getAnswer() == null && answer.length == 0));
     }
 
-    void checkForIndexException( int id ) {
-        if (id > quizzes.size()) {
-            throw new QuizNotFoundException("Invalid id" + id);
-        }
-    }
+
 
     List<Quiz> setQuizzes( List<Quiz> quizzes ) {
         this.quizzes = quizzes;
         return quizzes;
     }
 
+    void deleteQuiz( int id ) {
+        quizzes.remove(id);
+    }
 
 }

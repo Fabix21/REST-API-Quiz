@@ -23,7 +23,6 @@ public class QuizController {
 
     @GetMapping(path = "api/quizzes/{id}")
     public Quiz getQuestionById( @PathVariable int id ) {
-        quizRepository.checkForIndexException(id);
         return quizRepository.findById(id);
     }
 
@@ -41,7 +40,6 @@ public class QuizController {
 
     @PostMapping(path = "api/quizzes/{id}/solve")
     public Feedback checkQuestion( @RequestBody Quiz quiz,@PathVariable int id ) {
-        quizRepository.checkForIndexException(id);
         return quizRepository.getFeedback(quizRepository.findById(id),quiz.getAnswer());
     }
 
@@ -49,6 +47,12 @@ public class QuizController {
     public List<User> addUser( @RequestBody User user ) {
         userRepository.save(user);
         return userRepository.findAll();
+    }
+
+    @DeleteMapping(path = "api/quizzes/{id}")
+    public void deleteQuestion( @PathVariable long id ) {
+        h2Repository.deleteById(id);
+        quizRepository.deleteQuiz((int) id);
     }
 
 
