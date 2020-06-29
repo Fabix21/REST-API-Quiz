@@ -1,14 +1,14 @@
-package engine;
+package engine.models;
 
 import lombok.Getter;
 
 @Getter
-class Feedback {
+public class Feedback {
 
     private boolean success;
     private String feedback;
 
-    Feedback( boolean success ) {
+    public Feedback( boolean success ) {
         this.success = success;
         setFeedback();
     }

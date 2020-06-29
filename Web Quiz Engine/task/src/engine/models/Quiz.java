@@ -1,4 +1,4 @@
-package engine;
+package engine.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-class Quiz {
+public class Quiz {
     private String title;
     private String text;
     private String[] options;

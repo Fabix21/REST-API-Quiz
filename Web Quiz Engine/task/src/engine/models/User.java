@@ -1,4 +1,4 @@
-package engine;
+package engine.models;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-class User {
+public class User {
     @Id
     @GeneratedValue
     private long id;

@@ -1,5 +1,12 @@
-package engine;
+package engine.controllers;
 
+import engine.exceptions.UserEmailTakenException;
+import engine.models.Feedback;
+import engine.models.Quiz;
+import engine.models.User;
+import engine.repositories.H2Repository;
+import engine.repositories.QuizRepository;
+import engine.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,7 +72,7 @@ public class QuizController {
         quizRepository.deleteQuiz((int) id);
     }
 
-    public static boolean isEmailValid( String email ) {
+    private static boolean isEmailValid( String email ) {
         final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",Pattern.CASE_INSENSITIVE);
         return EMAIL_REGEX.matcher(email).matches();
     }
