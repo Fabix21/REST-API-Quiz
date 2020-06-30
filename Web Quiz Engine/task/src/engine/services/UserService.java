@@ -1,4 +1,4 @@
-package engine;
+package engine.services;
 
 import engine.exceptions.UserEmailTakenException;
 import engine.models.User;
