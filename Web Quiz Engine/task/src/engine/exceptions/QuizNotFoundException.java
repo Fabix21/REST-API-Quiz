@@ -10,5 +10,4 @@ public class QuizNotFoundException extends RuntimeException {
         super(message);
     }
 
-
 }
