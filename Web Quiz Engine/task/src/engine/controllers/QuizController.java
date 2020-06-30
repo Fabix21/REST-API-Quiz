@@ -12,10 +12,8 @@ import java.util.List;
 @RestController
 public class QuizController {
 
-
     @Autowired
     QuizService quizService;
-
 
     @GetMapping(path = "api/quizzes/{id}")
     public Quiz getQuestionById( @PathVariable int id ) {
@@ -30,7 +28,6 @@ public class QuizController {
     @PostMapping(path = "api/quizzes")
     public Quiz addQuestion( @RequestBody Quiz quiz ) {
         quizService.addQuiz(quiz);
-        // quizRepository.save(quiz);
         return quiz;
     }
 
@@ -41,7 +38,6 @@ public class QuizController {
 
     @DeleteMapping(path = "api/quizzes/{id}")
     public void deleteQuestion( @PathVariable long id ) {
-        //quizRepository.deleteById(id);
         quizService.deleteQuiz(id);
     }
 

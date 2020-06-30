@@ -26,10 +26,6 @@ public class QuizService {
                              .filter(quiz -> id == quiz.getId())
                              .findFirst()
                              .orElseThrow(() -> new QuizNotFoundException(("Invalid id" + id)));
-        // return quizzes.stream()
-        //          .filter(quiz -> id == quiz.getId())
-        //         .findFirst()
-        ///         .orElseThrow(() -> new QuizNotFoundException("Invalid id" + id));
     }
 
     public void addQuiz( Quiz quiz ) {
