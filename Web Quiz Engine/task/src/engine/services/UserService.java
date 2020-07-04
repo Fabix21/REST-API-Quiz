@@ -1,5 +1,6 @@
 package engine.services;
 
+import engine.UserPrincipal;
 import engine.exceptions.UserEmailTakenException;
 import engine.models.User;
 import engine.repositories.UserRepository;
@@ -38,6 +39,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername( String email ) throws UsernameNotFoundException {
-        return null;
+        User user = userRepository.findByEmail(email);
+        return new UserPrincipal(user);
     }
 }
