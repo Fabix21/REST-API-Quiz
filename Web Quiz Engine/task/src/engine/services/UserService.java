@@ -1,10 +1,7 @@
 package engine.services;
 
 import engine.UserPrincipal;
-import engine.exceptions.InvalidUserEmailException;
-import engine.exceptions.QuizNotFoundException;
-import engine.exceptions.UserEmailTakenException;
-import engine.exceptions.UserPasswordInvalidLengthException;
+import engine.exceptions.*;
 import engine.models.User;
 import engine.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +25,10 @@ public class UserService implements UserDetailsService {
         return emailRegex.matcher(email).matches();
     }
     public void addUser( User newUser ) {
+        if (newUser.getEmail() == null || newUser.getPassword() == null) {
+            throw new UserInvalidInputException();
+        }
+
         if (userRepository != null) {
             userRepository.findAll()
                           .stream()
@@ -47,7 +48,6 @@ public class UserService implements UserDetailsService {
                           .findAny()
                           .orElseThrow(UserPasswordInvalidLengthException::new);
         }
-
         String password = newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser.setPassword(password);
         userRepository.save(newUser);
