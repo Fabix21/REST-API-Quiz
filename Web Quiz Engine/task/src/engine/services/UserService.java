@@ -1,6 +1,8 @@
 package engine.services;
 
 import engine.UserPrincipal;
+import engine.exceptions.InvalidUserEmailException;
+import engine.exceptions.QuizNotFoundException;
 import engine.exceptions.UserEmailTakenException;
 import engine.models.User;
 import engine.repositories.UserRepository;
@@ -25,12 +27,26 @@ public class UserService implements UserDetailsService {
         return emailRegex.matcher(email).matches();
     }
     public void addUser( User newUser ) {
-        userRepository.findAll()
-                      .stream()
-                      .filter(user -> !user.getEmail().contains(newUser.getEmail()))
-                      .filter(user -> isEmailValid(newUser.getEmail()))
-                      .filter(user -> newUser.getPassword().length() >= 5).findAny()
-                      .orElseThrow(UserEmailTakenException::new);
+        if (userRepository != null) {
+            userRepository.findAll()
+                          .stream()
+                          .filter(user -> !user.getEmail().contains(newUser.getEmail()))
+                          .findAny()
+                          .orElseThrow(UserEmailTakenException::new);
+
+            userRepository.findAll()
+                          .stream()
+                          .filter(user -> isEmailValid(newUser.getEmail()))
+                          .findAny()
+                          .orElseThrow(InvalidUserEmailException::new);
+
+            userRepository.findAll()
+                          .stream()
+                          .filter(user -> newUser.getPassword().length() >= 5)
+                          .findAny()
+                          .orElseThrow(UserEmailTakenException::new);
+        }
+
         String password = newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         newUser.setPassword(password);
         userRepository.save(newUser);
@@ -44,7 +60,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername( String email ) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UserEmailTakenException();
+            throw new QuizNotFoundException("email");
         }
         return new UserPrincipal(user);
     }
