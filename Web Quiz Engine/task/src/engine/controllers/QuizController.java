@@ -4,7 +4,10 @@ import engine.models.Feedback;
 import engine.models.Quiz;
 import engine.services.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,7 +29,8 @@ public class QuizController {
     }
 
     @PostMapping(path = "api/quizzes")
-    public Quiz addQuestion( @RequestBody Quiz quiz ) {
+    public Quiz addQuestion( @RequestBody Quiz quiz,Authentication auth ) {
+        quiz.setCreatedByUser(auth.getName());
         quizService.addQuiz(quiz);
         return quiz;
     }
@@ -36,11 +40,24 @@ public class QuizController {
         return quizService.getFeedback(quizService.findById(id),quiz.getAnswer());
     }
 
+
     @DeleteMapping(path = "api/quizzes/{id}")
-    public void deleteQuestion( @PathVariable long id ) {
-        quizService.deleteQuiz(id);
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteQuestion( @PathVariable int id,Authentication auth ) {
+        if (quizService.findById(id).getCreatedByUser().equals(auth.getName())) {
+            quizService.deleteQuiz(id);
+        } else throw new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
 
+    @GetMapping(value = "api/username")
+    @ResponseBody
+    public String currentUserName( Authentication authentication ) {
+        if (authentication != null) {
+            return authentication.getName();
+        } else {
+            return "";
+        }
+    }
 
 }
 

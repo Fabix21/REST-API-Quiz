@@ -16,7 +16,7 @@ public class Quiz {
     private String[] options;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String[] answer;
-
+    private String createdByUser;
     @Id
     @GeneratedValue
     private long id;

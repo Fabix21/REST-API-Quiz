@@ -31,6 +31,7 @@ public class QuizService {
     public void addQuiz( Quiz quiz ) {
         if (quiz.getTitle() == null || quiz.getText() == null || quiz.getOptions() == null)
             throw new QuizNullException();
+        //quiz.setCreatedByUser(currentUser.getUsername());
         quizRepository.save(quiz);
     }
 

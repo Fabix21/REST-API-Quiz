@@ -32,9 +32,10 @@ public class UserService implements UserDetailsService {
         if (userRepository != null) {
             userRepository.findAll()
                           .stream()
-                          .filter(user -> !user.getEmail().contains(newUser.getEmail()))
-                          .findAny()
-                          .orElseThrow(UserEmailTakenException::new);
+                          .filter(user -> user.getEmail().equals(newUser.getEmail()))
+                          .findAny().ifPresent(user -> {
+                throw new UserEmailTakenException();
+            });
 
             userRepository.findAll()
                           .stream()
