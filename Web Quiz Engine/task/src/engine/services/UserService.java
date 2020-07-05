@@ -4,6 +4,7 @@ import engine.UserPrincipal;
 import engine.exceptions.InvalidUserEmailException;
 import engine.exceptions.QuizNotFoundException;
 import engine.exceptions.UserEmailTakenException;
+import engine.exceptions.UserPasswordInvalidLengthException;
 import engine.models.User;
 import engine.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class UserService implements UserDetailsService {
                           .stream()
                           .filter(user -> newUser.getPassword().length() >= 5)
                           .findAny()
-                          .orElseThrow(UserEmailTakenException::new);
+                          .orElseThrow(UserPasswordInvalidLengthException::new);
         }
 
         String password = newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
