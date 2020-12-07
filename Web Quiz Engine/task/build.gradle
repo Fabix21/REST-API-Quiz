@@ -19,12 +19,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     compile("org.springframework.boot:spring-boot-starter-web")
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testCompile 'org.mockito:mockito-junit-jupiter:2.27.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile 'org.assertj:assertj-core:3.9.1'    //if you like it (you should ;) )
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
 
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     runtimeOnly 'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
@@ -33,3 +37,6 @@ dependencies {
 
 }
 
+test {
+    useJUnitPlatform()
+}
