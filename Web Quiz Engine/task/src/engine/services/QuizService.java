@@ -18,8 +18,12 @@ import java.util.List;
 @Service
 public class QuizService {
 
-    @Autowired
     QuizRepository quizRepository;
+
+    @Autowired
+    public QuizService( QuizRepository quizRepository ) {
+        this.quizRepository = quizRepository;
+    }
 
     public Quiz findById( int id ) {
         return quizRepository.findAll().stream()
@@ -29,9 +33,9 @@ public class QuizService {
     }
 
     public void addQuiz( Quiz quiz ) {
-        if (quiz.getTitle() == null || quiz.getText() == null || quiz.getOptions() == null)
+        if (quiz.getTitle() == null || quiz.getText() == null || quiz.getOptions() == null) {
             throw new QuizNullException();
-        //quiz.setCreatedByUser(currentUser.getUsername());
+        }
         quizRepository.save(quiz);
     }
 
