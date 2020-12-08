@@ -20,12 +20,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
+    private UserService userService;
 
     @Mock
     UserRepository userRepository;
     @Mock
     PasswordEncoder passwordEncoder;
-    private UserService userService;
 
     @BeforeEach
     void setUp() {
@@ -65,6 +65,8 @@ class UserServiceTest {
     void shouldThrowWhenEmailOrUserIsEmpty() {
         User user = new User();
         user.setId(1);
+        user.setEmail("");
+        user.setPassword("");
 
         assertThatThrownBy(() -> userService.addUser(user)).isInstanceOf(UserInvalidInputException.class);
     }
